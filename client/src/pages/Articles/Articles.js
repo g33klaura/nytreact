@@ -48,7 +48,9 @@ class Articles extends Component {
     event.preventDefault();
     if (this.state.title) {
 
+      console.log(this.state.title);
       this.loadArticles(this.state.title)
+      
       // API.saveArticle({
       //   title: this.state.title,
       //   author: this.state.author,
@@ -72,7 +74,7 @@ class Articles extends Component {
                 value={this.state.title}
                 onChange={this.handleInputChange}
                 name="title"
-                placeholder="Title (required)"
+                placeholder="Title Keyword (required)"
               />
               {/* These inputs below need to change */}
               {/*<Input
