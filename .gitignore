@@ -1,3 +1,14 @@
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+README-default.md
+/client/README.md
+
 # Logs
 logs
 *.log
