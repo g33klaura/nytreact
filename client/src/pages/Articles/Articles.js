@@ -19,6 +19,7 @@ class Articles extends Component {
     this.loadArticles();
   }
 
+  // Will need to make ajax call here??
   loadArticles = () => {
     API.getArticles()
       .then(res =>
@@ -42,16 +43,19 @@ class Articles extends Component {
 
   // What does this become in the NYT app?
   // Instead may be a "save article from id" kinda thing
+  // Or is this the keyword search??
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveArticle({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
-      })
-        .then(res => this.loadArticles())
-        .catch(err => console.log(err));
+    if (this.state.title) {
+
+      this.loadArticles(this.state.title)
+      // API.saveArticle({
+      //   title: this.state.title,
+      //   author: this.state.author,
+      //   synopsis: this.state.synopsis
+      // })
+        // .then(res => this.loadArticles())
+        // .catch(err => console.log(err));
     }
   };
 
@@ -61,7 +65,7 @@ class Articles extends Component {
         <Row>
           <Col size="md-6">
             <Jumbotron>
-              <h1>What Articles to Search For?</h1>
+              <h1>Search for Articles</h1>
             </Jumbotron>
             <form>
               <Input
@@ -70,40 +74,42 @@ class Articles extends Component {
                 name="title"
                 placeholder="Title (required)"
               />
-              <Input
+              {/* These inputs below need to change */}
+              {/*<Input
                 value={this.state.author}
                 onChange={this.handleInputChange}
                 name="author"
                 placeholder="Author (required)"
-              />
-              <TextArea
+              />*/}
+              {/*<TextArea
                 value={this.state.synopsis}
                 onChange={this.handleInputChange}
                 name="synopsis"
                 placeholder="Synopsis (Optional)"
-              />
+              />*/}
               <FormBtn
-                disabled={!(this.state.author && this.state.title)}
+                disabled={!(this.state.title)}
                 onClick={this.handleFormSubmit}
               >
-                Submit Book
+                Search
               </FormBtn>
             </form>
           </Col>
           <Col size="md-6 sm-12">
             <Jumbotron>
-              <h1>Books On My List</h1>
+              <h1>Returned Articles</h1>
             </Jumbotron>
-            {this.state.books.length ? (
+            {this.state.articles.length ? (
               <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
+                {this.state.articles.map(article => (
+                  <ListItem key={article._id}>
+                    <Link to={"/articles/" + article._id}>
                       <strong>
-                        {book.title} by {book.author}
+                        {article.title} on {article.date}
+                        at {article.url}
                       </strong>
                     </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                    <DeleteBtn onClick={() => this.deleteArticle(article._id)} />
                   </ListItem>
                 ))}
               </List>
